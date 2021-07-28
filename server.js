@@ -31,7 +31,7 @@ const app = require('./app'); //this should be read only after reading the envir
 //   .then((doc) => console.log(doc))
 //   .catch((err) => console.log('The ERROR: ', err));
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
