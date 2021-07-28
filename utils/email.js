@@ -11,10 +11,6 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'production') {
-      //Sendgrid
-      return 1; //returns nothing
-    }
     return nodemailer.createTransport({
       //we user maiptrap instead of gmail
       //it does not send actual emails to the user but traps the emails in mailtrap
