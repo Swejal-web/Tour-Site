@@ -8,6 +8,7 @@ const hpp = require('hpp');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieparser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/AppError');
 const globalErrorhandler = require('./Controllers/errorController');
@@ -96,6 +97,8 @@ app.use(
 //   console.log('Hello from the middleware'); //never forget to write next otherwise it will be stuck and never give response
 //   next();
 // });
+
+app.use(compression()); //compresses json text for the client
 
 //Test middleware
 app.use((req, res, next) => {

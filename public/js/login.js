@@ -10,7 +10,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email: email,
         password: password,
@@ -35,7 +35,7 @@ const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     if (res.data.status === 'success') location.reload(true); //this will force reload from the server
     console.log(res);
@@ -49,8 +49,8 @@ const updateUserData = async (data, type) => {
   try {
     const url =
       type === 'password'
-        ? 'http://127.0.0.1:3000/api/v1/users/UpdateMyPassword'
-        : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        ? '/api/v1/users/UpdateMyPassword'
+        : '/api/v1/users/updateMe';
     const res = await axios({
       method: 'PATCH',
       url: url,
@@ -133,18 +133,16 @@ const stripe = Stripe(
 );
 
 const bookTour = async (tourid) => {
-  try{
-  // 1) gET CHECKOUT session from API
-  const session = await axios(
-    `http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourid}`
-  );
-  console.log(session);
-  // 2) Create checkout form + charge credit card
-  await stripe.redirectToCheckout({
-    sessionId: session.data.session.id
-  }); //this is the session which we obtain from stripe
+  try {
+    // 1) gET CHECKOUT session from API
+    const session = await axios(`/api/v1/bookings/checkout-session/${tourid}`);
+    console.log(session);
+    // 2) Create checkout form + charge credit card
+    await stripe.redirectToCheckout({
+      sessionId: session.data.session.id,
+    }); //this is the session which we obtain from stripe
   } catch (err) {
-    console.log(err)
+    console.log(err);
     showAlert('error', err);
   }
 };
